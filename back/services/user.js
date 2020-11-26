@@ -18,7 +18,7 @@ const get = async (text) => {
     
     const user = await fetch(url+"&inname="+text).then(response => response.json());
 
-    return httpHelper.mountResponse(user, 'Get User successfully');
+    return httpHelper.mountResponse(user.items, 'Get User successfully');
 };
 
 

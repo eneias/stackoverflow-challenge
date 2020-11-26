@@ -4,6 +4,14 @@ section#user-list {
     padding: 0 30px;
 }
 
+section#user-list input {
+    font-size: 18px;
+    position: absolute;
+    top: 20px;
+    height: 40px;
+    right: 99px;
+    width: 50%;
+}
 section#user-list article {
     background: #fff;
     border: 1px solid #ddd;

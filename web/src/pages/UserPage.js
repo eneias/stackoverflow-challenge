@@ -12,26 +12,29 @@ class UserPage extends Component {
     }
 
     async componentDidMount() {
-        this.registerToSocket();
-
-        const response = await api.get('user');
-
-        console.log(response.data.data);
-        
+        const response = await api.get('user');        
         this.setState({ user: response.data.data });
     }
-
-    registerToSocket = () => {
-        const socket = io('http://localhost:3333');
-
-        socket.on('user', newUser => {
-            this.setState({ user: [newUser, ...this.state.user] });
-        });
+    
+    
+    findAUser = async (evt) => {
+        let response;
+        if (evt.target.value.length) {
+            response = await api.get('user/search/'+decodeURI(evt.target.value));            
+        } else {
+            response = await api.get('user/');
+        }
+        this.setState({ user: response.data.data });
     }
 
     render() {
         return (
             <section id="user-list">
+                <input
+                    type='text'
+                    placeholder='search'
+                    onChange={this.findAUser}
+                />
                 { this.state.user.map(user => (
                     <article key={user._id}>
                     <header>
@@ -41,7 +44,6 @@ class UserPage extends Component {
                             <span className="place"><a href={user.link}>{user.link}</a></span>
                             
                         </div>
-
                         <img src={more} alt="More" />
                     </header>
 
